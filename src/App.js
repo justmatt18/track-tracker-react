@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from "./components/Header";
+import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      text: `Doctor's Appointment`,
+      day: "August 18, 2022",
+      reminder: true,
+    },
+    {
+      id: 2,
+      text: "Prepare Food - Lunch",
+      day: "January 24, 2020",
+      reminder: true,
+    },
+    {
+      id: 3,
+      text: "Birthday 6s",
+      day: "March 13, 2020",
+      reminder: false,
+    },
+  ]);
+
+  const deleteTask = (id) => {
+    // console.log("delete", id)
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const urgentReminder = (id) => {
+    // console.log(id)
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
+    );
+  };
+
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 1000) + 1;
+    const newTask = { id, ...task };
+    setTasks([...tasks, newTask]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header title="Task Tracker" />
+      <AddTask onAdd={addTask} />
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={urgentReminder} />
+      ) : (
+        <p>No Task to show :( </p>
+      )}
     </div>
   );
-}
+};
 
 export default App;
