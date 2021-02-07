@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
 const App = () => {
+  const [showNewTask, setNewTask] = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -19,11 +20,12 @@ const App = () => {
     },
     {
       id: 3,
-      text: "Birthday 6s",
+      text: "Birthday Preparation",
       day: "March 13, 2020",
       reminder: false,
     },
   ]);
+  // const api_tasks = "http://localhost:5000/tasks";
 
   const deleteTask = (id) => {
     // console.log("delete", id)
@@ -45,10 +47,18 @@ const App = () => {
     setTasks([...tasks, newTask]);
   };
 
+  const showTaskForm = () => {
+    setNewTask(!showNewTask);
+  };
+
   return (
     <div className="container">
-      <Header title="Task Tracker" />
-      <AddTask onAdd={addTask} />
+      <Header
+        title="Task Tracker"
+        isShown={showNewTask}
+        toggleShowTask={showTaskForm}
+      />
+      {showNewTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={urgentReminder} />
       ) : (

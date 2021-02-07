@@ -1,31 +1,28 @@
-import PropTypes from 'prop-types';
-import Button from './Button'
+import PropTypes from "prop-types";
+import Button from "./Button";
 
-const Header = ({title})  => {
-    const onClick = () => {
-        console.log('clicked');
-    }
-
-    return (
-      <div className='header-section'>
-        <header className='header'>
-            <h1>{title}</h1>
-            <Button
-                onClick = {onClick}
-                color = 'green'
-                text = 'Add' 
-            />
-        </header>
-      </div>  
-    )
-}
+const Header = ({ title, toggleShowTask, isShown }) => {
+  return (
+    <div className="header-section">
+      <header className="header">
+        <h1>{title}</h1>
+        <Button
+          className="btn-default"
+          onClick={() => toggleShowTask()}
+          color={isShown ? "red" : "green"}
+          text={isShown ? "Hide" : "Show"}
+        />
+      </header>
+    </div>
+  );
+};
 
 Header.defaultProps = {
-    title: 'Hello Matty',
-}
+  title: "Hello Matty",
+};
 
-Header.propTypes = { 
-    title: PropTypes.string.isRequired,
-}
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default Header;

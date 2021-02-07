@@ -9,3 +9,9 @@
 
 - Timestamp - 1:13:00
 - new - 1:14:33
+
+### Day 4
+
+** Router **
+
+- Time: 1:39:00
